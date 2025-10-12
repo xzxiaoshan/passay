@@ -6,6 +6,7 @@ import org.passay.DefaultPasswordValidator;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
 import org.passay.data.EnglishCharacterData;
+import org.passay.password.Origin;
 import org.passay.rule.AbstractDictionaryRule;
 import org.passay.rule.CharacterCharacteristicsRule;
 import org.passay.rule.CharacterRule;
@@ -69,11 +70,11 @@ public final class ShannonEntropyFactory
    */
   public static ShannonEntropy createEntropy(final boolean dictionaryCheck, final PasswordData passwordData)
   {
-    if (!passwordData.getOrigin().equals(PasswordData.Origin.User)) {
-      throw new IllegalArgumentException("Password data must have an origin of " + PasswordData.Origin.User);
+    if (!Origin.User.equals(passwordData.getOrigin())) {
+      throw new IllegalArgumentException("Password data must have an origin of " + Origin.User);
     }
     final boolean compositionCheck = hasComposition(passwordData);
-    return new ShannonEntropy(dictionaryCheck, compositionCheck, passwordData.getCharacterCount());
+    return new ShannonEntropy(dictionaryCheck, compositionCheck, passwordData.getPassword().codePointCount());
   }
 
 

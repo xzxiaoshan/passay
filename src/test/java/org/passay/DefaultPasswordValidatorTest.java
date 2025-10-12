@@ -9,8 +9,6 @@ import java.util.ResourceBundle;
 import org.cryptacular.bean.EncodingHashBean;
 import org.cryptacular.spec.CodecSpec;
 import org.cryptacular.spec.DigestSpec;
-import org.passay.PasswordData.HistoricalReference;
-import org.passay.PasswordData.SourceReference;
 import org.passay.data.EnglishCharacterData;
 import org.passay.data.EnglishSequenceData;
 import org.passay.dictionary.ArrayWordList;
@@ -19,6 +17,10 @@ import org.passay.dictionary.WordListDictionary;
 import org.passay.dictionary.WordLists;
 import org.passay.dictionary.sort.ArraysSort;
 import org.passay.entropy.RandomPasswordEntropy;
+import org.passay.password.HistoricalReference;
+import org.passay.password.Origin;
+import org.passay.password.Reference;
+import org.passay.password.SourceReference;
 import org.passay.resolver.MessageResolver;
 import org.passay.resolver.PropertiesMessageResolver;
 import org.passay.resolver.ResourceBundleMessageResolver;
@@ -69,7 +71,7 @@ public class DefaultPasswordValidatorTest
   private static final String USER = "testuser";
 
   /** For testing. */
-  private final List<PasswordData.Reference> references = new ArrayList<>();
+  private final List<Reference> references = new ArrayList<>();
 
   /** Test checker. */
   private final List<Rule> rules = new ArrayList<>();
@@ -209,7 +211,7 @@ public class DefaultPasswordValidatorTest
       DefaultPasswordValidator.DEFAULT_ENTROPY_PROVIDER, l);
 
     try {
-      final ValidationResult result = pv.validate(new PasswordData("heLlo", PasswordData.Origin.Generated));
+      final ValidationResult result = pv.validate(new PasswordData("heLlo", Origin.Generated));
       result.getEntropy();
       fail("Should have thrown IllegalArgumentException");
     } catch (Throwable e) {
@@ -249,9 +251,9 @@ public class DefaultPasswordValidatorTest
     //Generated Password Origin Tests:
 
     //182 total unique characters from given CharacterRules in validator
-    length5CompositionPassword = new PasswordData("h3L!o", PasswordData.Origin.Generated);
-    length10CompositionPassword = new PasswordData("h3!Lohell0", PasswordData.Origin.Generated);
-    length22CompositionPassword = new PasswordData("he1loHellohellohello!!", PasswordData.Origin.Generated);
+    length5CompositionPassword = new PasswordData("h3L!o", Origin.Generated);
+    length10CompositionPassword = new PasswordData("h3!Lohell0", Origin.Generated);
+    length22CompositionPassword = new PasswordData("he1loHellohellohello!!", Origin.Generated);
 
     //Random generated password test log2(b^l):
     assertThat(validator.validate(length5CompositionPassword).getEntropy())
@@ -273,7 +275,7 @@ public class DefaultPasswordValidatorTest
       .isEqualTo(
         new RandomPasswordEntropy(
           allowedRule.getAllowedCharacters().codePointCount(),
-          length5CompositionPassword.getCharacterCount()).estimate());
+          length5CompositionPassword.getPassword().codePointCount()).estimate());
   }
 
   /**

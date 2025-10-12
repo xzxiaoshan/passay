@@ -19,6 +19,9 @@ import org.passay.dictionary.WordListDictionary;
 import org.passay.dictionary.WordLists;
 import org.passay.dictionary.sort.ArraysSort;
 import org.passay.generate.PasswordGenerator;
+import org.passay.password.HistoricalReference;
+import org.passay.password.Reference;
+import org.passay.password.SourceReference;
 import org.passay.rule.AllowedCharacterRule;
 import org.passay.rule.AllowedRegexRule;
 import org.passay.rule.CharacterCharacteristicsRule;
@@ -113,14 +116,14 @@ public final class HeapDump
     sha1Bean.setDigestSpec(new DigestSpec("SHA1"));
     sha1Bean.setCodecSpec(new CodecSpec("Base64"));
 
-    final List<PasswordData.Reference> references = new ArrayList<>();
+    final List<Reference> references = new ArrayList<>();
     final DigestHistoryRule historyRule = new DigestHistoryRule(sha1Bean);
-    references.add(new PasswordData.HistoricalReference("history", "safx/LW8+SsSy/o3PmCNy4VEm5s="));
-    references.add(new PasswordData.HistoricalReference("history", "zurb9DyQ5nooY1la8h86Bh0n1iw="));
-    references.add(new PasswordData.HistoricalReference("history", "bhqabXwE3S8E6xNJfX/d76MFOCs="));
+    references.add(new HistoricalReference("history", "safx/LW8+SsSy/o3PmCNy4VEm5s="));
+    references.add(new HistoricalReference("history", "zurb9DyQ5nooY1la8h86Bh0n1iw="));
+    references.add(new HistoricalReference("history", "bhqabXwE3S8E6xNJfX/d76MFOCs="));
 
     final DigestSourceRule sourceRule = new DigestSourceRule(sha1Bean);
-    references.add(new PasswordData.SourceReference("source", "CJGTDMQRP+rmHApkcijC80aDV0o="));
+    references.add(new SourceReference("source", "CJGTDMQRP+rmHApkcijC80aDV0o="));
 
     final AllowedCharacterRule allowedCharacterRule = new AllowedCharacterRule(
       new UnicodeString(
